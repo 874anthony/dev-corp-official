@@ -1,3 +1,8 @@
 .big-logo {
     height: 100px!important;
 }
+
+.info p,
+p.card-description {
+    text-align: justify;
+}
