@@ -8,8 +8,11 @@ function isEmail($email) {
 if($_POST) {
 
     //email to receive the notification when someone subscribes
-    $emailTo = 'lnatera27@gmail.com';
+    $from = 'soporte@developcorp.com.co';
+    $emailTo = 'fmendoza@developcorp.com.co, lnatera27@gmail.com';
 
+    $client_name = trim($_POST['client-name']);
+    $client_message = $_POST['contact-message'];
     $client_email = addslashes(trim($_POST['client-email']));
 
     if(!isEmail($client_email)) {
@@ -21,16 +24,63 @@ if($_POST) {
     else {
         $array = array();
         $array['valid'] = 1;
-        $array['message'] = '¡Gracias por escribirnos! <br> Nuestro equipo te contactará pronto.';
+        $array['message'] = '¡Gracias por escribirnos! <br> Nuestro equipo se contactará contigo pronto.';
         echo json_encode($array);
 
         // Send email
-	    $subject = '¡Nuevo Mensaje! [Develop+ Corporation]';
-	    $body = "¡Alguien está interesado en nuestros servicios!\n\nSu correo es: " . $client_email . "<br/><br/><h3>Mensaje</h3><br/>" . trim($_POST['contact-message']);
-	    mail($emailTo, $subject, $body);
+        $subject = '¡Nuevo mensaje! [Develop+ Corporation]';
+        $body = "
+                <html>
+                    <head>
+                    <title>Correo de Contacto</title>
+                    <style>
+                        table, th, td {
+                            border: 1px solid #134e7e;
+                            border-collapse: collapse;
+                            border-radius: 5px;
+                        }
+                        th, td {
+                            padding: 5px;
+                            text-align: left;
+                        }
+                        p {
+                            text-align: justify;
+                        }
+                    </style>
+                    </head>
+                    <body>
+                        <h3>¡Alguien está interesado en nuestros servicios!</h3>
+                        <table style='width: 100%'>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Correo</th>
+                        </tr>
+                        <tr>
+                            <td>".$client_name."</td>
+                            <td>".$client_email."</td>
+                        </tr>
+                        <tr>
+                            <th colspan='2'>Mensaje</th>
+                        </tr>
+                        <tr>
+                            <td colspan='2'>
+                                <p>".$client_message."</p>
+                            </td>
+                        </tr>
+                        </table>
+                    </body>
+                </html>
+        ";
+        //$body = "Nombre: ". $client_name . "Correo: ". $client_email . "\nMensaje" . $client_message . "/// FIN DEL MENSAJE ///";
+        // Always set content-type when sending HTML email
+        $header = "MIME-Version: 1.0" . "\r\n";
+        $header .= "Content-type:text/html;charset=UTF-8" . "\r\n";
+
+        // More headers
+        $header .= 'From: Contacto Develop+ <' . $from . ">\r\n";
+	    mail($emailTo, $subject, $body, $header);
     }
 }
 
 // uncomment this to set the From and Reply-To emails, then pass the $headers variable to the "mail" function below
 //$headers = "From: ".$client_email." <" . $client_email . ">" . "\r\n" . "Reply-To: " . $client_email;
-?>
