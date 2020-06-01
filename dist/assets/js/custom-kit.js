@@ -8,6 +8,12 @@ jQuery(document).ready(function() {
     $('.contact form').submit(function(e) {
         e.preventDefault();
         var postdata = $('.contact form').serialize();
+
+        /**
+         * Saving the info email to the storage
+         */
+        localStorage.setItem('messageInfo', postdata);
+
         $.ajax({
             type: 'POST',
             url: 'assets/contact.php',
@@ -29,4 +35,28 @@ jQuery(document).ready(function() {
             }
         });
     });
+
+    /**
+     * Disable the button if there's already an email
+     */
+
+    if (localStorage.getItem('messageInfo')) {
+        $('#sendMessageCustom').prop('disabled', true);
+    } else {
+        $('#sendMessageCustom').prop('disabled', false);
+    }
+
+    /**
+     * Disabling the button if the info required is not provided     
+     */
+
+    $('#sendMessageCustom').prop('disabled', true);
+    $('input[type="text"]').keyup(function() {
+        if ($(this).val() != '') { // The this keyword points to the input tag.
+            $('#sendMessageCustom').prop('disabled', false);
+        } else {
+            $('#sendMessageCustom').prop('disabled', true);
+        }
+    });
+
 });
