@@ -1,4 +1,5 @@
 jQuery(document).ready(function() {
+
     /*
         Subscription form
     */
@@ -7,7 +8,12 @@ jQuery(document).ready(function() {
 
     $('.contact form').submit(function(e) {
         e.preventDefault();
-        var postdata = $('.contact form').serialize();
+
+        // Adding the dates
+        var shippingDate = Date.now();
+        var expirationDate = shippingDate + (3 * 60 * 60 * 1000);
+
+        var postdata = $('.contact form').serialize() + `&date=${shippingDate}&expirationDate=${expirationDate}`;
 
         /**
          * Saving the info email to the storage
@@ -42,6 +48,17 @@ jQuery(document).ready(function() {
 
     if (localStorage.getItem('messageInfo')) {
         $('#sendMessageCustom').prop('disabled', true);
+
+        var data = localStorage.getItem('messageInfo');
+
+        var shippingDate = data.split('&')[3].split('=')[1];
+        var expirationDate = data.split('&')[4].split('=')[1];
+
+        if (Date.now() >= expirationDate) {
+            localStorage.removeItem('messageInfo');
+            $('#sendMessageCustom').prop('disabled', false);
+        }
+
     } else {
         $('#sendMessageCustom').prop('disabled', false);
     }
