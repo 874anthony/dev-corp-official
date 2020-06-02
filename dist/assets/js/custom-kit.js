@@ -51,7 +51,6 @@ jQuery(document).ready(function() {
 
         var data = localStorage.getItem('messageInfo');
 
-        var shippingDate = data.split('&')[3].split('=')[1];
         var expirationDate = data.split('&')[4].split('=')[1];
 
         if (Date.now() >= expirationDate) {
