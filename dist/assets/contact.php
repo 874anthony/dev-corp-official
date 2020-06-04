@@ -9,7 +9,7 @@ if($_POST) {
 
     //email to receive the notification when someone subscribes
     $from = 'soporte@developcorp.com.co';
-    $emailTo = 'anthony082008@hotmail.es';
+    $emailTo = 'lnatera@developcorp.com.co, fmendoza@developcorp.com.co';
 
     $client_name = trim($_POST['client-name']);
     $client_message = $_POST['contact-message'];

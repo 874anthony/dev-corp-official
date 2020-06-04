@@ -13,7 +13,7 @@ jQuery(document).ready(function() {
         var shippingDate = Date.now();
         var expirationDate = shippingDate + (3 * 60 * 60 * 1000);
 
-        var postdata = $('.contact form').serialize() + `&date=${shippingDate}&expirationDate=${expirationDate}`;
+        var postdata = $('.contact form').serialize() + '&date=${shippingDate}&expirationDate=${expirationDate}';
 
         /**
          * Saving the info email to the storage
@@ -40,6 +40,7 @@ jQuery(document).ready(function() {
                 }
             }
         });
+
     });
 
     /**
@@ -65,10 +66,10 @@ jQuery(document).ready(function() {
     /**
      * Disabling the button if the info required is not provided     
      */
-
     $('#sendMessageCustom').prop('disabled', true);
-    $('input[type="text"]').keyup(function() {
-        if ($(this).val() != '') { // The this keyword points to the input tag.
+
+    $('input[type="text"], input[type="email"], textarea[type="text"]').keyup(function() {
+        if ($(this).val != '') { // The this keyword points to the input tag.
             $('#sendMessageCustom').prop('disabled', false);
         } else {
             $('#sendMessageCustom').prop('disabled', true);
