@@ -66,7 +66,6 @@ jQuery(document).ready(function() {
     /**
      * Disabling the button if the info required is not provided     
      */
-
     $('#sendMessageCustom').prop('disabled', true);
     ($('input[type="text"]') && $('textarea[type="text"]') && $('input[type="email"]')).keyup(function() {
         if ($(this).val() != '') { // The this keyword points to the input tag.
