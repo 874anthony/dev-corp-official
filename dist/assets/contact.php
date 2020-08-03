@@ -8,8 +8,7 @@ function isEmail($email) {
 if($_POST) {
 
     //email to receive the notification when someone subscribes
-    $from = 'soporte@developcorp.com.co';
-    $emailTo = 'anthony082008@hotmail.es';
+    $emailTo = 'fmendoza@developcorp.com.co, lnatera@developcorp.com.co';
 
     $client_name = trim($_POST['client-name']);
     $client_message = $_POST['contact-message'];
@@ -77,7 +76,6 @@ if($_POST) {
         $header .= "Content-type:text/html;charset=UTF-8" . "\r\n";
 
         // More headers
-        $header .= 'From: Contacto Develop+ <' . $from . ">\r\n";
 	    mail($emailTo, $subject, $body, $header);
     }
 }
